@@ -1,8 +1,11 @@
 package com.subhranil.bluemoon.lite.screens.select_host
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
+import com.subhranil.bluemoon.lite.explorer.ExplorerScreen
+import com.subhranil.bluemoon.lite.explorer.ExplorerScreenRoute
 import com.subhranil.bluemoon.lite.models.BasicInfo
 import com.subhranil.bluemoon.lite.repository.LocalInfoRepository
 import com.subhranil.bluemoon.lite.repository.ServerRepository
@@ -14,9 +17,10 @@ import kotlinx.coroutines.launch
 
 class SelectHostViewModel(
     private val localInfoRepository: LocalInfoRepository,
-    private val serverRepository: ServerRepository
+    private val serverRepository: ServerRepository,
+    private val savedStateHandle: SavedStateHandle
 ): ViewModel() {
-    private val _state = MutableStateFlow(_root_ide_package_.com.subhranil.bluemoon.lite.screens.select_host.SelectHostScreenState())
+    private val _state = MutableStateFlow(SelectHostScreenState())
     val state = _state.asStateFlow()
     init {
         viewModelScope.launch {
@@ -35,10 +39,16 @@ class SelectHostViewModel(
             }
         }
     }
-    fun onAction(action: com.subhranil.bluemoon.lite.screens.select_host.SelectHostScreenActions) {
+    fun onAction(action: SelectHostScreenActions) {
         when(action) {
-            is com.subhranil.bluemoon.lite.screens.select_host.SelectHostScreenActions.OnConnectButtonPressed -> onConnectButtonPressed(action.navHostController)
+            is SelectHostScreenActions.OnConnectButtonPressed -> onConnectButtonPressed(action.navHostController)
+            is SelectHostScreenActions.ConnectToHost -> onConnectToHost(action.info, action.navHostController)
         }
+    }
+
+    private fun onConnectToHost(info: BasicInfo, navHostController: NavHostController) {
+        savedStateHandle["basicUrl"] = info.hostUrl
+        navHostController.navigate(ExplorerScreenRoute)
     }
 
     private fun onConnectButtonPressed(navHostController: NavHostController) {

@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Quick Sync Lite"
+rootProject.name = "BlueMoon Lite"
 include(":app")

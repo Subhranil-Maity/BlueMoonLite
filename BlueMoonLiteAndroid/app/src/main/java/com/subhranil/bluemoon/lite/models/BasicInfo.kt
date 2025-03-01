@@ -1,5 +1,7 @@
 package com.subhranil.bluemoon.lite.models
 
+import kotlinx.serialization.Serializable
+
 /*
  * #[derive(Debug, Serialize, Deserialize)]
  * pub struct BasicInfo {
@@ -8,6 +10,7 @@ package com.subhranil.bluemoon.lite.models
  *                                                                                                                             pub server_version: String,
  * }
  */
+
 
 data class BasicInfo(
     val hostName: String,

@@ -1,5 +1,6 @@
 package com.subhranil.bluemoon.lite.di
 
+import androidx.lifecycle.SavedStateHandle
 import com.subhranil.bluemoon.lite.explorer.ExplorerViewModel
 import com.subhranil.bluemoon.lite.repository.LocalInfoRepository
 import com.subhranil.bluemoon.lite.repository.ServerRepository
@@ -13,10 +14,15 @@ import org.koin.dsl.module
 
 
 var appViewModelModule = module {
-    viewModel { SelectHostViewModel(get(), get()) }
-    viewModel { QrScannerViewModel(get()) }
-    viewModel { ExplorerViewModel(get()) }
+    viewModel { SelectHostViewModel(get(), get(), get()) }
+    viewModel { QrScannerViewModel(get(), get()) }
+    viewModel { ExplorerViewModel(get(), get()) }
 }
+
+var singletons = module {
+    single { SavedStateHandle() }
+}
+
 var appTestingRemoteHostModule = module {
     single { RemoteServerRepo() }.bind(ServerRepository::class)
     single { LocalDataRepo() }.bind(LocalInfoRepository::class)

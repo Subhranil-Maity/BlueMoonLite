@@ -3,6 +3,7 @@ package com.subhranil.bluemoon.lite
 import android.app.Application
 import com.subhranil.bluemoon.lite.di.appTestingRemoteHostModule
 import com.subhranil.bluemoon.lite.di.appViewModelModule
+import com.subhranil.bluemoon.lite.di.singletons
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -13,6 +14,7 @@ class MyApp: Application() {
             androidContext(this@MyApp)
             modules(appTestingRemoteHostModule)
             modules(appViewModelModule)
+            modules(singletons)
         }
     }
 }

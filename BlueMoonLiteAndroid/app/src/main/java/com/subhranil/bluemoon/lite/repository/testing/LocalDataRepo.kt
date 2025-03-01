@@ -12,7 +12,7 @@ class LocalDataRepo: LocalInfoRepository {
         )
     }
     override suspend fun getAllPreviousBasicInfo(): List<BasicInfo> {
-        delay(1000)
+        delay(50)
         return basicInfoList
     }
 

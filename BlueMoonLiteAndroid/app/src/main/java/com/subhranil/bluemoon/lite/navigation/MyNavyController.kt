@@ -33,6 +33,7 @@ fun MyNavHostController(
             )
         }
         composable<ExplorerScreenRoute> {
+
             ExplorerScreen(
                 viewModel = koinViewModel(),
                 navHostController = navController

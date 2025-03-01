@@ -26,7 +26,9 @@ fun HostLabel(
     basicInfo: BasicInfo,
     onClick: () -> Unit
 ) {
-    Card {
+    Card(
+        onClick = onClick,
+    ) {
         Row(
             modifier = modifier
                 .fillMaxWidth()

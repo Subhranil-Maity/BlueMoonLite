@@ -1,8 +1,10 @@
 package com.subhranil.bluemoon.lite.screens.qr_connect
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
+import com.subhranil.bluemoon.lite.explorer.ExplorerScreenRoute
 import com.subhranil.bluemoon.lite.models.BasicInfo
 import com.subhranil.bluemoon.lite.repository.ServerRepository
 import com.subhranil.bluemoon.lite.utils.Validator
@@ -14,7 +16,8 @@ import kotlinx.coroutines.launch
 
 
 class QrScannerViewModel(
-    private val serverRepository: ServerRepository
+    private val serverRepository: ServerRepository,
+    private val savedStateHandle: SavedStateHandle
 ): ViewModel() {
     private val _state = MutableStateFlow(QrScannerScreenState())
     val state = _state.asStateFlow()
@@ -67,7 +70,7 @@ class QrScannerViewModel(
 
     }
 
-    fun onAction(action: com.subhranil.bluemoon.lite.screens.qr_connect.QrScannerAction) {
+    fun onAction(action: QrScannerAction) {
         when(action) {
             is QrScannerAction.OnBottomSheetDismissed -> onBottomSheetDismissed()
             is QrScannerAction.OnConnectButtonPressed -> onConnectButtonPressed(action.navHostController, action.basicInfo)
@@ -75,7 +78,8 @@ class QrScannerViewModel(
     }
 
     private fun onConnectButtonPressed(navHostController: NavHostController, basicInfo: BasicInfo) {
-
+        savedStateHandle["basicUrl"] = basicInfo.hostUrl
+        navHostController.navigate(ExplorerScreenRoute)
     }
 
     private fun onBottomSheetDismissed() {

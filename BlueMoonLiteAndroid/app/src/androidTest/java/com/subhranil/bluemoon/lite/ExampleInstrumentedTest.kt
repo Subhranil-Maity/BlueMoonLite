@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.subhranil.quicksynclite", appContext.packageName)
+        assertEquals("com.subhranil.bluemoon.lite", appContext.packageName)
     }
 }

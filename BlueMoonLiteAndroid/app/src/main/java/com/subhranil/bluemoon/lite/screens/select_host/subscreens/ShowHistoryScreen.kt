@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.subhranil.bluemoon.lite.screens.select_host.SelectHostScreenActions
 import com.subhranil.bluemoon.lite.screens.select_host.SelectHostScreenState
 import com.subhranil.bluemoon.lite.screens.select_host.components.HostLabel
@@ -17,7 +18,8 @@ import com.subhranil.bluemoon.lite.screens.select_host.components.HostLabel
 @Composable
 fun ColumnScope.ShowHistoryScreen(
     state: SelectHostScreenState,
-    onAction: (SelectHostScreenActions) -> Unit
+    onAction: (SelectHostScreenActions) -> Unit,
+    navHostController: NavHostController
 ) {
     Column (
         Modifier.weight(1f)
@@ -28,7 +30,7 @@ fun ColumnScope.ShowHistoryScreen(
         AnimatedVisibility(state.activeHosts.isNotEmpty()) {
             state.activeHosts.forEach { info->
                 HostLabel(basicInfo = info) {
-
+                    onAction(SelectHostScreenActions.ConnectToHost(info, navHostController))
                 }
             }
         }

@@ -10,7 +10,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.subhranil.quicksynclite"
+        applicationId = "com.subhranil.bluemoon.lite"
         minSdk = 31
         targetSdk = 35
         versionCode = 1

@@ -16,7 +16,7 @@ object SelectHostScreenRoute
 @Composable
 fun SelectHostScreen(
     modifier: Modifier = Modifier,
-    viewModel: com.subhranil.bluemoon.lite.screens.select_host.SelectHostViewModel,
+    viewModel: SelectHostViewModel,
     navController: NavHostController
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
@@ -25,7 +25,7 @@ fun SelectHostScreen(
         modifier = modifier.fillMaxSize()
     ) {
         ShowConnectScreen(onAction, navController)
-        ShowHistoryScreen(state, onAction)
+        ShowHistoryScreen(state, onAction, navController)
     }
 }
 

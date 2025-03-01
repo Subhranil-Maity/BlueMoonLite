@@ -32,17 +32,17 @@ class RemoteServerRepo: ServerRepository {
         delay(50)
         val drives = listOf(
             Drive(
-                "C:\\",
+                "C Drive Name",
+                50000000,
                 1000000000,
-                500000000,
                 DiskType.SSD,
                 "C:\\",
                 "NTFS"
             ),
             Drive(
-                "D:\\",
+                "D Drive Name",
+                1250000000,
                 2000000000,
-                1000000000,
                 DiskType.HDD,
                 "D:\\",
                 "NTFS"
