@@ -1,6 +1,7 @@
 package com.subhranil.bluemoon.lite
 
 import android.app.Application
+import com.subhranil.bluemoon.lite.di.appActualHostModule
 import com.subhranil.bluemoon.lite.di.appTestingRemoteHostModule
 import com.subhranil.bluemoon.lite.di.appViewModelModule
 import com.subhranil.bluemoon.lite.di.singletons
@@ -12,7 +13,8 @@ class MyApp: Application() {
         super.onCreate()
         startKoin {
             androidContext(this@MyApp)
-            modules(appTestingRemoteHostModule)
+//            modules(appTestingRemoteHostModule)
+            modules(appActualHostModule)
             modules(appViewModelModule)
             modules(singletons)
         }

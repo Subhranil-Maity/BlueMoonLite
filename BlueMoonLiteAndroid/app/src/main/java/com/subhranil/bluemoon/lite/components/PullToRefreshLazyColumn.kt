@@ -37,7 +37,7 @@ fun <T>PullToRefreshLazyColumn(
         LazyColumn(
             state = lazyListState,
             contentPadding = PaddingValues(8.dp),
-            modifier = modifier.fillMaxSize(),
+//            modifier = modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(2.dp),
         ) {
             items(items, key = key) { item ->

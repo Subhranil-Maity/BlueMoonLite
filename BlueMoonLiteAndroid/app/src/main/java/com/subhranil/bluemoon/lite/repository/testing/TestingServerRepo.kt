@@ -10,7 +10,7 @@ import com.subhranil.bluemoon.lite.utils.result.MyResult
 import com.subhranil.bluemoon.lite.utils.result.RemoteError
 import kotlinx.coroutines.delay
 
-class RemoteServerRepo: ServerRepository {
+class TestingServerRepo: ServerRepository {
     override suspend fun isServerReachable(
         url: String
     ): Boolean {

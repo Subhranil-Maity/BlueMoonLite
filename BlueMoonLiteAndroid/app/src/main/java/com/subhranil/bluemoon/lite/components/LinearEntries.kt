@@ -9,21 +9,17 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Face
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.subhranil.bluemoon.lite.R
 import com.subhranil.bluemoon.lite.models.EntryType
 import com.subhranil.bluemoon.lite.models.FsEntry
+import com.subhranil.bluemoon.lite.utils.icons.getIcon
 
 @Composable
 fun LinearEntry(
@@ -42,11 +38,12 @@ fun LinearEntry(
             },
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
+        val (icon, color) = getIcon(entry)
         Icon(
-            modifier = Modifier.height(50.dp),
-            imageVector = getIcon(entry.entryType),
+            modifier = Modifier.height(60.dp),
+            imageVector = icon,
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.primary
+            tint = color
         )
         Column(
             modifier = Modifier.fillMaxWidth(0.8f),
@@ -65,14 +62,6 @@ fun LinearEntry(
     }
 }
 
-@Composable
-fun getIcon(entryType: EntryType): ImageVector {
-    return when (entryType) {
-        EntryType.FILE -> Icons.Default.Face
-        EntryType.DIRECTORY -> ImageVector.vectorResource(R.drawable.folder_icon)
-        EntryType.SYMLINK -> Icons.Default.Face
-    };
-}
 
 @Preview()
 @Composable

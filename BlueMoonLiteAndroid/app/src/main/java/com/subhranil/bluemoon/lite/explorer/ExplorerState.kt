@@ -2,6 +2,7 @@ package com.subhranil.bluemoon.lite.explorer
 
 import com.subhranil.bluemoon.lite.models.BasicInfo
 import com.subhranil.bluemoon.lite.models.Drive
+import com.subhranil.bluemoon.lite.models.FsEntry
 import com.subhranil.bluemoon.lite.utils.PathStack
 
 data class ExplorerState (
@@ -12,7 +13,8 @@ data class ExplorerState (
     val isRefreshing: Boolean = false,
     val drives: List<Drive> = emptyList(),
     val title: String = "Explorer",
-    val onWhichExplorer: OnWhichExplorer = OnWhichExplorer.DRIVE
+    val onWhichExplorer: OnWhichExplorer = OnWhichExplorer.DRIVE,
+    val currentPathEntries: List<FsEntry> = emptyList()
 )
 
 enum class OnWhichExplorer {

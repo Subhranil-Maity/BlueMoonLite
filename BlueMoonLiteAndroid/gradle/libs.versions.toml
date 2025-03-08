@@ -9,7 +9,7 @@ lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.0"
 composeBom = "2025.02.00"
 kotlin-serilization = "1.8.0"
-ktor-client = "3.0.0"
+ktor-client = "3.1.1"
 koinAndroid = "4.1.0-Beta3"
 androidxCamera = "1.4.1"
 mlkitBarcodeScanning = "17.3.0"
@@ -31,16 +31,17 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 
-kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name="kotlinx-serialization-json",version.ref = "kotlin-serilization" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serilization" }
 
 ktor-client-android = { group = "io.ktor", name = "ktor-client-android", version.ref = "ktor-client" }
+kor-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor-client" }
 ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor-client" }
-ktor-client-serialization = { group = "io.ktor", name = "ktor-client-serialization-kotlinx-json", version.ref = "ktor-client" }
-kor-core = { group = "io.ktor", name = "ktor-core", version.ref = "ktor-client" }
+ktor-client-serialization-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor-client" }
+#ktor-client-serialization = {            group = "io.ktor", name = "ktor-client-serialization-kotlinx-json", version.ref = "ktor-client" }
 
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koinAndroid" }
-koin-android = { group = "io.insert-koin",name = "koin-android", version.ref = "koinAndroid" }
-koin-androidx-compose = { group = "io.insert-koin",name = "koin-androidx-compose", version.ref = "koinAndroid" }
+koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koinAndroid" }
+koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koinAndroid" }
 
 #implementation ("androidx.camera:camera-camera2:1.4.1")
 #implementation ("androidx.camera:camera-lifecycle:1.4.1")
@@ -70,7 +71,7 @@ koin = [
 ktor = [
     "ktor-client-android",
     "ktor-client-content-negotiation",
-    "ktor-client-serialization",
+    "ktor-client-serialization-json",
     "kor-core"
 ]
 

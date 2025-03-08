@@ -1,5 +1,6 @@
 package com.subhranil.bluemoon.lite.screens.qr_connect
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

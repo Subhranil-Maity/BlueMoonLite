@@ -4,26 +4,35 @@ import androidx.lifecycle.SavedStateHandle
 import com.subhranil.bluemoon.lite.explorer.ExplorerViewModel
 import com.subhranil.bluemoon.lite.repository.LocalInfoRepository
 import com.subhranil.bluemoon.lite.repository.ServerRepository
-import com.subhranil.bluemoon.lite.repository.testing.LocalDataRepo
-import com.subhranil.bluemoon.lite.repository.testing.RemoteServerRepo
+import com.subhranil.bluemoon.lite.repository.testing.TestingLocalDataRepo
+import com.subhranil.bluemoon.lite.repository.testing.TestingServerRepo
 import com.subhranil.bluemoon.lite.screens.qr_connect.QrScannerViewModel
 import com.subhranil.bluemoon.lite.screens.select_host.SelectHostViewModel
+import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.bind
 import org.koin.dsl.module
-
+import com.subhranil.bluemoon.lite.repository.remote.RemoteServerRepo
+import com.subhranil.bluemoon.lite.repository.remote.provideHttpClient
+import org.koin.core.module.dsl.viewModelOf
 
 var appViewModelModule = module {
-    viewModel { SelectHostViewModel(get(), get(), get()) }
-    viewModel { QrScannerViewModel(get(), get()) }
-    viewModel { ExplorerViewModel(get(), get()) }
+    viewModelOf(::SelectHostViewModel)
+    viewModelOf(::QrScannerViewModel)
+    viewModelOf(::ExplorerViewModel)
 }
 
 var singletons = module {
     single { SavedStateHandle() }
 }
 
+var appActualHostModule = module {
+    single { provideHttpClient() }
+    singleOf(::RemoteServerRepo).bind<ServerRepository>()
+    singleOf(::TestingLocalDataRepo).bind<LocalInfoRepository>()
+}
+
 var appTestingRemoteHostModule = module {
-    single { RemoteServerRepo() }.bind(ServerRepository::class)
-    single { LocalDataRepo() }.bind(LocalInfoRepository::class)
+    singleOf(::TestingServerRepo).bind<ServerRepository>()
+    singleOf(::TestingLocalDataRepo).bind<LocalInfoRepository>()
 }

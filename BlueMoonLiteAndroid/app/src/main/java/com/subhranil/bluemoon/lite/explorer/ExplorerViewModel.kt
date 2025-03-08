@@ -1,11 +1,14 @@
 package com.subhranil.bluemoon.lite.explorer
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.subhranil.bluemoon.lite.models.Drive
+import com.subhranil.bluemoon.lite.models.EntryType
+import com.subhranil.bluemoon.lite.models.FsEntry
 import com.subhranil.bluemoon.lite.repository.ServerRepository
 import com.subhranil.bluemoon.lite.screens.select_host.SelectHostScreenRoute
 import com.subhranil.bluemoon.lite.utils.PathStack
@@ -15,6 +18,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import org.koin.core.context.GlobalContext.get
 
 class ExplorerViewModel(
     private val repository: ServerRepository,
@@ -24,18 +29,16 @@ class ExplorerViewModel(
     val state = _state.asStateFlow()
 
     init {
-        withRefreshing {
-            if (savedStateHandle.contains("basicUrl")) {
-                val url = savedStateHandle.get<String>("basicUrl")!!
-                _state.value = state.value.copy(
-                    url = url
-                )
-                fetchBasicInfo(url)
-            } else {
-                throw RuntimeException("Basic Info is null")
-            }
+        if (savedStateHandle.contains("basicUrl")) {
+            val url = savedStateHandle.get<String>("basicUrl")!!
+            Log.d("ExplorerViewModel", "Basic Info URL: $url")
+            _state.value = state.value.copy(
+                url = url
+            )
+            fetchBasicInfo(url)
+        } else {
+            throw RuntimeException("Basic Info is null")
         }
-
     }
 
     fun loadDrives() {
@@ -54,7 +57,7 @@ class ExplorerViewModel(
     }
 
     private fun fetchBasicInfo(url: String) {
-        viewModelScope.launch {
+        runBlocking {
             val info = repository.getBasicInfo(url)
             withHandledError(info) { data ->
                 _state.update {
@@ -72,30 +75,37 @@ class ExplorerViewModel(
             ExplorerActions.Refresh -> onRefresh()
             is ExplorerActions.SelectDrive -> onSelectDrive(action.drive)
             is ExplorerActions.OnBack -> onBack(action.navHostController)
+            is ExplorerActions.OnSelectedEntry -> onSelectedEntry(action.fsEntry)
+        }
+    }
+
+    private fun onSelectedEntry(fsEntry: FsEntry) {
+        if (fsEntry.entryType == EntryType.DIRECTORY) {
+            _state.update {
+                it.copy(
+                    currentPath = PathStack.fromAbsolutePath(fsEntry.absolutePath)
+                )
+            }
+//            loadCurrentPath()
+        } else {
+            Toast.makeText(get().get(), "Not Implemented", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun onBack(navHostController: NavHostController) {
-        withRefreshing {
-//            if (state.value.currentPath.isNoWhere()) {
-//
-//            }
-            if (state.value.onWhichExplorer == OnWhichExplorer.FILE_SYSTEM) {
+        if (state.value.onWhichExplorer == OnWhichExplorer.DRIVE) {
+            navHostController.navigate(SelectHostScreenRoute)
+            return
+        }
+        if (state.value.onWhichExplorer == OnWhichExplorer.FILE_SYSTEM) {
+            if (_state.value.currentPath.isNoWhere()) {
+                goToDriveScreen()
+            }else{
                 _state.update {
                     it.copy(
-                        onWhichExplorer = OnWhichExplorer.DRIVE
+                        currentPath = it.currentPath.getExceptLast()
                     )
                 }
-            }else if(state.value.onWhichExplorer == OnWhichExplorer.DRIVE){
-                navHostController.navigate(SelectHostScreenRoute)
-                return@withRefreshing
-            }
-            _state.update {
-                it.copy(
-                    currentPath = it.currentPath.apply {
-                        goBack()
-                    }
-                )
             }
         }
     }
@@ -106,9 +116,7 @@ class ExplorerViewModel(
                 _state.update {
                     it.copy(
                         onWhichExplorer = OnWhichExplorer.FILE_SYSTEM,
-                        currentPath = PathStack().apply {
-                            fromAbsolutePath(drive.mountPoint)
-                        }
+                        currentPath = PathStack.fromAbsolutePath(drive.mountPoint)
                     )
                 }
             }
@@ -116,7 +124,10 @@ class ExplorerViewModel(
     }
 
     private fun onRefresh() {
-        loadDrives()
+        when (state.value.onWhichExplorer) {
+            OnWhichExplorer.DRIVE -> loadDrives()
+            OnWhichExplorer.FILE_SYSTEM -> loadCurrentPath()
+        }
     }
 
     private inline fun withRefreshing(block: () -> Unit) {
@@ -129,6 +140,13 @@ class ExplorerViewModel(
         _state.update {
             it.copy(
                 isRefreshing = false
+            )
+        }
+    }
+    private fun goToDriveScreen() {
+        _state.update {
+            it.copy(
+                onWhichExplorer = OnWhichExplorer.DRIVE
             )
         }
     }
@@ -146,5 +164,34 @@ class ExplorerViewModel(
         } else {
             block(result.successOrNull()!!)
         }
+    }
+
+    fun loadCurrentPath() {
+        viewModelScope.launch {
+            withRefreshing {
+                val entries = repository.getEntries(
+                    state.value.basicInfo.hostUrl,
+                    state.value.currentPath.getAbsolutePath()
+                )
+                withHandledError(entries) { data ->
+                    _state.update { it ->
+                        it.copy(
+                            currentPathEntries = data.sortedByDescending { d -> d.entryType }
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    fun consumeError(): String {
+        val error = state.value.errorString ?: "No Errors"
+        Log.d("ExplorerViewModel", "Error: $error")
+        _state.update {
+            it.copy(
+                errorString = null
+            )
+        }
+        return error
     }
 }

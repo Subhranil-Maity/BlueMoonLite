@@ -4,11 +4,11 @@ import com.subhranil.bluemoon.lite.models.BasicInfo
 import com.subhranil.bluemoon.lite.repository.LocalInfoRepository
 import kotlinx.coroutines.delay
 
-class LocalDataRepo: LocalInfoRepository {
+class TestingLocalDataRepo: LocalInfoRepository {
     private val basicInfoList = mutableListOf<BasicInfo>()
     init {
         basicInfoList.add(
-            BasicInfo("Test Host", "1.0", "1.0", "http://localhost:8080")
+            BasicInfo("Test Host", "1.0", "1.0", "http://192.168.161.114:3000")
         )
     }
     override suspend fun getAllPreviousBasicInfo(): List<BasicInfo> {

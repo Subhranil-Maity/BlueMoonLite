@@ -62,7 +62,9 @@ dependencies {
 
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.bundles.koin)
-    implementation(libs.bundles.koin)
+    implementation(libs.bundles.ktor)
+//    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.8")
+//    implementation("org.slf4j:slf4j-android:2.0.17")
     implementation(libs.androidx.navigation.compose)
     implementation(libs.bundles.camera)
 

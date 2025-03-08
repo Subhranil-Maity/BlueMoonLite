@@ -1,14 +1,7 @@
 package com.subhranil.bluemoon.lite.models
 
-/*
- * {
- *     "name": "name.extension",
- *     "size": 21299,
- *     "entry_type": "File",
- *     "symlink_location": null,
- *     "absolute_path": "d://some/some/name.extension"
- *   },
- */
+import androidx.compose.runtime.Immutable
+
 
 
 data class FsEntry (
