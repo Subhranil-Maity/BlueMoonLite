@@ -7,7 +7,8 @@ pub fn generate_qr_code(data: &str, scale: usize) -> ColorImage {
         return HASH_CASH.lock().unwrap().get(data).unwrap().clone();
     }
     info("YEss");
-    let qr = QrCode::encode_text(data, QrCodeEcc::Medium).unwrap();
+    // let qr = QrCode::encode_text(data, QrCodeEcc::High).unwrap();
+    let qr = QrCode::encode_binary(data.as_bytes(), QrCodeEcc::Medium).unwrap();
     let size = qr.size() as usize;
     let scaled_size = size * scale;
 

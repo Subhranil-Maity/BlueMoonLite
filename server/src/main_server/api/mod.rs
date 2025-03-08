@@ -16,14 +16,14 @@ mod delete;
 mod mkdir;
 mod basic_info;
 
-pub fn handler() -> Router {
-    Router::new().route("/api/get_drives", get(api_get_drives))
-        .route("/api/get_entries", get(api_get_entries))
-        .route("/api/download_entry", get(api_download_entry))
-        .route("/api/upload_entry", post(api_upload_entry))
-        .route("/api/delete_entry", delete(api_delete_entry))
-        .route("/api/mkdir", post(api_mkdir))
-        .route("/api/get_basic_info", get(api_get_basic_info))
+pub fn lite_api_handler() -> Router {
+    Router::new().route("/get_drives", get(api_get_drives))
+        .route("/get_entries", get(api_get_entries))
+        .route("/download_entry", get(api_download_entry))
+        .route("/upload_entry", post(api_upload_entry))
+        .route("/delete_entry", delete(api_delete_entry))
+        .route("/mkdir", post(api_mkdir))
+        .route("/get_basic_info", get(api_get_basic_info))
     // Router::new()
 }
 

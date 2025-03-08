@@ -1,6 +1,6 @@
 use crate::gui::qr::generate_qr_code;
 use crate::main_server::server_info::ServerInfo;
-use eframe::egui::{Context, Ui};
+use eframe::egui::{Color32, Context, Ui};
 use eframe::{egui, Frame};
 use local_ip_address::{local_ip, Error};
 use std::net::IpAddr;
@@ -36,6 +36,7 @@ impl MyApp {
 
 impl eframe::App for MyApp {
     fn update(&mut self, ctx: &Context, frame: &mut Frame) {
+        // ctx.set_visuals(egui::Visuals::light());
         egui::CentralPanel::default().show(ctx, |ui| {
             // ui.label(format!("Count: {}", self.counter));
             match local_ip() {
@@ -52,16 +53,34 @@ impl eframe::App for MyApp {
         });
     }
 }
-
 fn show_ui(my_app: &mut MyApp, ui: &mut Ui, ip: IpAddr, server: &ServerInfo) {
     let img = generate_qr_code(server.get_qr_info_from_ip_addr(ip).as_str(), 10);
+
     let texture = ui.ctx().load_texture("qr_code", img, egui::TextureOptions::default());
     let image_size = texture.size_vec2();
-    // ui.ho
-    ui.vertical_centered(|ui| {
-        ui.add(egui::Image::from_texture(&texture).fit_to_exact_size(image_size));
-    });
+
+    // Set a white background around the QR code
+    egui::Frame::new()
+        .fill(Color32::WHITE) // White border
+        .outer_margin(egui::Margin::same(10)) // Space around QR
+        .corner_radius(10.0) // Optional: Add rounded corners
+        .show(ui, |ui| {
+            ui.vertical_centered(|ui| {
+                ui.add(egui::Image::from_texture(&texture).fit_to_exact_size(image_size));
+            });
+        });
 }
+
+// fn show_ui(my_app: &mut MyApp, ui: &mut Ui, ip: IpAddr, server: &ServerInfo) {
+//     let img = generate_qr_code(server.get_qr_info_from_ip_addr(ip).as_str(), 10);
+//     // let img = generate_qr_code("HELLO", 10);
+//     let texture = ui.ctx().load_texture("qr_code", img, egui::TextureOptions::default());
+//     let image_size = texture.size_vec2();
+//     // ui.ho
+//     ui.vertical_centered(|ui| {
+//         ui.add(egui::Image::from_texture(&texture).fit_to_exact_size(image_size));
+//     });
+// }
 
 
 pub fn gui(my_app: MyApp) {
