@@ -51,7 +51,8 @@ private fun DeviceInfoScreenPreview() {
         hostName = "Test Host",
         hostVersion = "1.0.0",
         serverVersion = "1.0.0",
-        hostUrl = "http://localhost:8080"
+        hostUrl = "http://localhost:8080",
+        hostOsName = "Unknown"
     )
     DeviceInfoDisplay(deviceInfo = basicInfo)
 }

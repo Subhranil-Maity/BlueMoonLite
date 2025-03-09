@@ -7,7 +7,8 @@ fun BasicInfoDto.toBasicInfo(url: String): BasicInfo{
     return BasicInfo(
         hostName = this.hostName,
         hostVersion = this.hostVersion,
-        serverVersion = "Unknown",
-        hostUrl = url
+        serverVersion = this.serverVersion,
+        hostUrl = url,
+        hostOsName = this.hostOsName
     )
 }

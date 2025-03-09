@@ -22,7 +22,7 @@ class TestingServerRepo: ServerRepository {
         url: String
     ): MyResult<BasicInfo, RemoteError> {
         delay(1000)
-        return MyResult.Success(BasicInfo("Test Host", "1.0", "1.0", url))
+        return MyResult.Success(BasicInfo("Test Host", "Windows", "1.0", "1.0", url, ))
 //        return MyResult.Error(RemoteError.NETWORK_ERROR)
     }
 

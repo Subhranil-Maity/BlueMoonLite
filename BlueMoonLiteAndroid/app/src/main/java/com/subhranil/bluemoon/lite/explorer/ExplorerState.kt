@@ -7,7 +7,7 @@ import com.subhranil.bluemoon.lite.utils.PathStack
 
 data class ExplorerState (
     val currentPath: PathStack = PathStack(),
-    val basicInfo: BasicInfo = BasicInfo("", "", "", ""),
+    val basicInfo: BasicInfo = BasicInfo("", "", "", "", ""),
     var errorString: String? = null,
     val url: String = "",
     val isRefreshing: Boolean = false,

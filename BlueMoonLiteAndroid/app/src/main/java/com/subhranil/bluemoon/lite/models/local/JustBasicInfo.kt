@@ -14,6 +14,7 @@ fun JustBasicInfo.toBasicInfo(): BasicInfo {
         hostName = this.hostName,
         hostVersion = "Unknown",
         serverVersion = "Unknown",
-        hostUrl = this.hostUrl
+        hostUrl = this.hostUrl,
+        hostOsName = "Unknown"
     )
 }
