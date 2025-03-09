@@ -1,4 +1,4 @@
-package com.subhranil.bluemoon.lite.repository.remote
+package com.subhranil.bluemoon.lite.repository.actual.remote
 
 import io.ktor.client.*
 import io.ktor.client.engine.android.*

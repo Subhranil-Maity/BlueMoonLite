@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import com.subhranil.bluemoon.lite.explorer.ExplorerScreen
 import com.subhranil.bluemoon.lite.explorer.ExplorerScreenRoute
 import com.subhranil.bluemoon.lite.models.BasicInfo
+import com.subhranil.bluemoon.lite.models.local.JustBasicInfo
 import com.subhranil.bluemoon.lite.repository.LocalInfoRepository
 import com.subhranil.bluemoon.lite.repository.ServerRepository
 import com.subhranil.bluemoon.lite.screens.qr_connect.QrScannerCameraScreenRoute
@@ -25,7 +26,7 @@ class SelectHostViewModel(
     init {
         viewModelScope.launch {
             // TODO: Add Items As it is being Checked
-            val aliveHost = mutableListOf<BasicInfo>()
+            val aliveHost = mutableListOf<JustBasicInfo>()
             for (basicInfo in localInfoRepository.getAllPreviousBasicInfo()) {
                 val isAlive = serverRepository.isServerReachable(basicInfo.hostUrl)
                 if (isAlive) {

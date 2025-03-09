@@ -12,8 +12,9 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.bind
 import org.koin.dsl.module
-import com.subhranil.bluemoon.lite.repository.remote.RemoteServerRepo
-import com.subhranil.bluemoon.lite.repository.remote.provideHttpClient
+import com.subhranil.bluemoon.lite.repository.actual.remote.RemoteServerRepo
+import com.subhranil.bluemoon.lite.repository.actual.LocalDataStore
+import com.subhranil.bluemoon.lite.repository.actual.remote.provideHttpClient
 import org.koin.core.module.dsl.viewModelOf
 
 var appViewModelModule = module {
@@ -29,7 +30,7 @@ var singletons = module {
 var appActualHostModule = module {
     single { provideHttpClient() }
     singleOf(::RemoteServerRepo).bind<ServerRepository>()
-    singleOf(::TestingLocalDataRepo).bind<LocalInfoRepository>()
+    singleOf(::LocalDataStore).bind<LocalInfoRepository>()
 }
 
 var appTestingRemoteHostModule = module {

@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.subhranil.bluemoon.lite.models.local.toBasicInfo
 import com.subhranil.bluemoon.lite.screens.select_host.SelectHostScreenActions
 import com.subhranil.bluemoon.lite.screens.select_host.SelectHostScreenState
 import com.subhranil.bluemoon.lite.screens.select_host.components.HostLabel
@@ -29,8 +30,8 @@ fun ColumnScope.ShowHistoryScreen(
         Text("Connection History", style = MaterialTheme.typography.headlineLarge)
         AnimatedVisibility(state.activeHosts.isNotEmpty()) {
             state.activeHosts.forEach { info->
-                HostLabel(basicInfo = info) {
-                    onAction(SelectHostScreenActions.ConnectToHost(info, navHostController))
+                HostLabel(basicInfo = info.toBasicInfo()) {
+                    onAction(SelectHostScreenActions.ConnectToHost(info.toBasicInfo(), navHostController))
                 }
             }
         }

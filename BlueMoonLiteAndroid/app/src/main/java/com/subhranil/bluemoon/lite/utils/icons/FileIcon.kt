@@ -32,12 +32,6 @@ private val extensionToTypeMap: Map<String, FileEntryType> = mapOf(
 @Composable
 fun getFileIcon(fileName: String): Pair<ImageVector, Color> {
      return fromFileName(fileName).getIcon()
-//    Icon(
-//        imageVector = iconData.first,
-//        contentDescription = null,
-//        tint = iconData.second,
-//        modifier = modifier
-//    )
 }
 
 

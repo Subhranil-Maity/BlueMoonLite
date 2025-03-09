@@ -1,13 +1,14 @@
 package com.subhranil.bluemoon.lite.screens.qr_connect
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.subhranil.bluemoon.lite.explorer.ExplorerScreenRoute
 import com.subhranil.bluemoon.lite.models.BasicInfo
+import com.subhranil.bluemoon.lite.models.local.JustBasicInfo
 import com.subhranil.bluemoon.lite.repository.ServerRepository
+import com.subhranil.bluemoon.lite.repository.actual.LocalDataStore
 import com.subhranil.bluemoon.lite.utils.Validator
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +19,8 @@ import kotlinx.coroutines.launch
 
 class QrScannerViewModel(
     private val serverRepository: ServerRepository,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle,
+    private val localDataStore: LocalDataStore
 ): ViewModel() {
     private val _state = MutableStateFlow(QrScannerScreenState())
     val state = _state.asStateFlow()
@@ -79,6 +81,21 @@ class QrScannerViewModel(
     }
 
     private fun onConnectButtonPressed(navHostController: NavHostController, basicInfo: BasicInfo) {
+        viewModelScope.launch {
+            val previousConnections = localDataStore.getAllPreviousBasicInfo() as MutableList
+            val index = previousConnections.indexOfFirst { it.hostName == basicInfo.hostName }
+            if (index != -1){
+                previousConnections.removeAt(index)
+            }
+            previousConnections.add(
+                JustBasicInfo(
+                    basicInfo.hostName,
+                    basicInfo.hostUrl
+                )
+            )
+            localDataStore.addAllBasicInfo(previousConnections)
+
+        }
         savedStateHandle["basicUrl"] = basicInfo.hostUrl
         navHostController.navigate(ExplorerScreenRoute)
     }

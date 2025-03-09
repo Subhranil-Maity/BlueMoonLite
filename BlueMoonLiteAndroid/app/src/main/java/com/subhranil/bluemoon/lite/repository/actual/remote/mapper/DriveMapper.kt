@@ -1,8 +1,8 @@
-package com.subhranil.bluemoon.lite.repository.remote.mapper
+package com.subhranil.bluemoon.lite.repository.actual.remote.mapper
 
 import com.subhranil.bluemoon.lite.models.DiskType
 import com.subhranil.bluemoon.lite.models.Drive
-import com.subhranil.bluemoon.lite.repository.remote.dto.DriveDto
+import com.subhranil.bluemoon.lite.repository.actual.remote.dto.DriveDto
 
 
 fun DriveDto.toDrive(): Drive {

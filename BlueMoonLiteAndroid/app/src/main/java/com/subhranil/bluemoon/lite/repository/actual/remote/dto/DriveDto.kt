@@ -1,4 +1,4 @@
-package com.subhranil.bluemoon.lite.repository.remote.dto
+package com.subhranil.bluemoon.lite.repository.actual.remote.dto
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

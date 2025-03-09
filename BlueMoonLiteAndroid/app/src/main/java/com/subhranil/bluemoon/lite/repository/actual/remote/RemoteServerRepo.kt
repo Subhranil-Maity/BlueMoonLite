@@ -1,4 +1,4 @@
-package com.subhranil.bluemoon.lite.repository.remote
+package com.subhranil.bluemoon.lite.repository.actual.remote
 
 import android.content.Context
 import android.util.Log
@@ -8,12 +8,12 @@ import com.subhranil.bluemoon.lite.models.BasicInfo
 import com.subhranil.bluemoon.lite.models.Drive
 import com.subhranil.bluemoon.lite.models.FsEntry
 import com.subhranil.bluemoon.lite.repository.ServerRepository
-import com.subhranil.bluemoon.lite.repository.remote.dto.BasicInfoDto
-import com.subhranil.bluemoon.lite.repository.remote.dto.DriveDto
-import com.subhranil.bluemoon.lite.repository.remote.dto.FsEntryDto
-import com.subhranil.bluemoon.lite.repository.remote.mapper.toBasicInfo
-import com.subhranil.bluemoon.lite.repository.remote.mapper.toDrive
-import com.subhranil.bluemoon.lite.repository.remote.mapper.toFsEntry
+import com.subhranil.bluemoon.lite.repository.actual.remote.dto.BasicInfoDto
+import com.subhranil.bluemoon.lite.repository.actual.remote.dto.DriveDto
+import com.subhranil.bluemoon.lite.repository.actual.remote.dto.FsEntryDto
+import com.subhranil.bluemoon.lite.repository.actual.remote.mapper.toBasicInfo
+import com.subhranil.bluemoon.lite.repository.actual.remote.mapper.toDrive
+import com.subhranil.bluemoon.lite.repository.actual.remote.mapper.toFsEntry
 import com.subhranil.bluemoon.lite.utils.result.MyResult
 import com.subhranil.bluemoon.lite.utils.result.RemoteError
 import io.ktor.client.HttpClient
